@@ -31,8 +31,8 @@ router.get('/list/categories', async (req, res) => {
 });
 
 // Get News Detail by ID
-router.get('/detail/:id_news', async (req, res) => {
-    const { id_news } = req.params;
+router.get('/detail', async (req, res) => {
+    const { id_news } = req.query;
     try {
         const news = await News.findOne({
             where: { id_news },
