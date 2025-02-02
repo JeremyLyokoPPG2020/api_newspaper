@@ -8,7 +8,8 @@ const db = require('../config/db'); // This imports the sequelize instance
 router.get('/list', async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM categories');
-        res.json(rows); // Send back the results
+        //res.json(rows); // Send back the results
+        res.json({ data: rows });
     } catch (err) {
         res.status(500).json({ error: err.message }); // Handle any errors
     }
