@@ -8,9 +8,10 @@ const Category = require('../models/Category');
 router.get('/list', async (req, res) => {
     try {
         const news = await News.findAll({
-            attributes: ['id_news', 'judul', 'gambar', 'created_at'],
+            attributes: ['id_news', 'judul', 'konten', 'gambar', 'created_at'],
         });
-        res.json(news);
+        //res.json(news);
+        res.json({ data: news });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -22,9 +23,9 @@ router.get('/list/categories', async (req, res) => {
     try {
         const news = await News.findAll({
             where: { id_category },
-            attributes: ['id_news', 'judul', 'gambar', 'created_at'],
+            attributes: ['id_news', 'judul', 'konten', 'gambar', 'created_at'],
         });
-        res.json(news);
+        res.json({ data: news });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
@@ -41,7 +42,7 @@ router.get('/detail', async (req, res) => {
                 { model: Category, as: 'category', attributes: ['nama_kategori'] },
             ],
         });
-        if (news) res.json(news);
+        if (news) res.json({ data: [news] });
         else res.status(404).json({ message: 'News not found' });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -60,7 +61,7 @@ router.post('/add', async (req, res) => {
             id_author,
             created_at: new Date(),
         });
-        res.status(201).json({ message: 'News added successfully', news: newNews });
+        res.status(201).json({ message: 'News added successfully', data: [newNews] });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }
